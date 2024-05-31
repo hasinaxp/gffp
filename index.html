@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fastest Finger First</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            font-size: 4rem;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        #play {
+            padding: 0px 4rem;
+            background-color: #333;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 20px;
+            text-align: center;
+
+        }
+
+        #play:hover {
+            background-color: #555;
+        }
+
+        #highest {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .top {
+            background: greenyellow !important;
+            color: white;
+            text-shadow: 1px 1px 1px black;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Fastest Finger First 👆 </h2>
+    <div id="play">
+        <h4>PLAY NOW</h4>
+    </div>
+
+    <div id="highest">
+    </div>
+
+    <script>
+        const play = document.getElementById('play');
+        const Highest = document.getElementById('highest');
+        let gameState = 'wait';
+        const timer = 8000;
+        let score = 0;
+        let topScore = 0;
+
+        const startGame = () => {
+            gameState = 'play';
+            for (let i = 3; i >= 0; i--) {
+                setTimeout(() => {
+                    if (i == 0) {
+                        score = 0;
+                        gameState = 'going';
+                        play.innerHTML = 'GO!!!';
+                        setTimeout(() => {
+                            gameState = 'wait';
+                            play.innerHTML = 'PLAY NOW';
+                        }, timer);
+                    }
+                    else {
+                        play.innerHTML = `Starts in ${i}...`;
+                    }
+                }, (3 - i) * 1000);
+            }
+        }
+
+        document.addEventListener('keydown', e => {
+            if (gameState == 'going') {
+                score++;
+                play.innerHTML = `Score: ${score}`;
+                if (score > topScore) {
+                    topScore = score;
+                    Highest.classList.add('top');
+                    Highest.innerHTML = `Highest Score: ${topScore}`;
+                }
+            }
+        })
+
+        play.addEventListener('click', e => {
+            if (gameState == 'wait') {
+                startGame();
+                Highest.classList.remove('top');
+            }
+
+        })
+
+
+
+    </script>
+
+</body>
+
+</html>
