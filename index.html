@@ -48,6 +48,10 @@
             color: white;
             text-shadow: 1px 1px 1px black;
         }
+
+        .top::after {
+            content: '🔥';
+        }
     </style>
 </head>
 
@@ -67,7 +71,7 @@
         const timer = 8000;
         let score = 0;
         let topScore = 0;
-        let addScore = false;
+        let canScore = false;
 
         const startGame = () => {
             gameState = 'play';
@@ -91,13 +95,12 @@
 
         document.addEventListener('keydown', e => {
             if (gameState == 'going') {
-                addScore = true;
+                canScore = true;
             }
         })
 
-        document.addEventListener('up', e => {
-            if (gameState == 'going' && addScore) {
-                addScore = false;
+        document.addEventListener('keyup', e => {
+            if (gameState == 'going' && canScore) {
                 score++;
                 play.innerHTML = `Score: ${score}`;
                 if (score > topScore) {
