@@ -67,6 +67,7 @@
         const timer = 8000;
         let score = 0;
         let topScore = 0;
+        let addScore = false;
 
         const startGame = () => {
             gameState = 'play';
@@ -90,6 +91,13 @@
 
         document.addEventListener('keydown', e => {
             if (gameState == 'going') {
+                addScore = true;
+            }
+        })
+
+        document.addEventListener('up', e => {
+            if (gameState == 'going' && addScore) {
+                addScore = false;
                 score++;
                 play.innerHTML = `Score: ${score}`;
                 if (score > topScore) {
